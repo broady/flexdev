@@ -1,5 +1,7 @@
 # flexdev
 
+[![Build Status](https://travis-ci.org/broady/flexdev.svg?branch=master)](https://travis-ci.org/broady/flexdev)
+
 Command flexdev is a fast way to develop Go applications for App Engine flexible environment.
 
 Get the tools:
