@@ -82,6 +82,8 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("X-FlexDev", flexdev.Version)
+
 	if h := r.Header.Get("X-Appengine-Https"); h != "" && h != "on" {
 		Response{
 			Code:  http.StatusBadRequest,
@@ -107,8 +109,6 @@ func adminHandler(w http.ResponseWriter, r *http.Request) {
 		}.WriteTo(w)
 		return
 	}
-
-	w.Header().Set("X-FlexDev", flexdev.Version)
 
 	adminMux.ServeHTTP(w, r)
 }
