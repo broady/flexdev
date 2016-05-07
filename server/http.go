@@ -193,6 +193,9 @@ func createBuildHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	for _, f := range remove {
+		if f == "_gopath/pkg" {
+			continue
+		}
 		log.Printf("Removing %s", f)
 		if err := os.RemoveAll(filepath.Join(build.dir, f)); err != nil {
 			Response{Error: err}.WriteTo(w)

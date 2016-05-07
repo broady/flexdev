@@ -45,12 +45,13 @@ func (b *Build) Cleanup() error {
 func (b *Build) GoBuild() error {
 	b.State = flexdev.StateBuilding
 
-	cmd := exec.Command("go", "build",
-		"-tags", "appenginevm",
-		"-o", "a.out")
+	cmd := exec.Command("go", "install",
+		"-tags", "appenginevm")
 	cmd.Dir = b.dir
 	cmd.Stdout, cmd.Stderr = &b.output, &b.output
-	cmd.Env = env(os.Environ(), "GOPATH", os.Getenv("GOPATH")+":"+filepath.Join(b.dir, "_gopath"))
+	cmd.Env = os.Environ()
+	cmd.Env = env(cmd.Env, "GOPATH", os.Getenv("GOPATH")+":"+filepath.Join(b.dir, "_gopath"))
+	cmd.Env = env(cmd.Env, "GOBIN", b.dir)
 
 	if err := cmd.Run(); err != nil {
 		return err
@@ -73,7 +74,7 @@ func (b *Build) Start() error {
 		return err
 	}
 
-	cmd := exec.Command("./a.out")
+	cmd := exec.Command("./flexdev-server")
 	cmd.Dir = b.dir
 	cmd.Stdout, cmd.Stderr = &b.output, &b.output
 	environ := env(os.Environ(), "PORT", fmt.Sprintf("%s", port))
