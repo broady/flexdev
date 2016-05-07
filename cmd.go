@@ -164,9 +164,6 @@ func doDeploy() error {
 	if err != nil {
 		return err
 	}
-	if resp.Build != nil {
-		log.Printf("Build id: %s", resp.Build.ID)
-	}
 
 	sendFile := make(chan string)
 	var sendErr error
@@ -308,14 +305,6 @@ func doReq(req *http.Request) (*Response, error) {
 		return nil, fmt.Errorf("Remote error: %s", payload.Error)
 	}
 	return &payload, nil
-}
-
-type DirList []DirEntry
-
-type DirEntry struct {
-	Path  string
-	IsDir bool
-	SHA1  string
 }
 
 type Build struct {
