@@ -54,7 +54,7 @@ type DirEntry struct {
 }
 
 func (e DirEntry) InDir(dir DirEntry) bool {
-	return dir.IsDir && strings.HasPrefix(e.Path+"/", dir.Path)
+	return dir.IsDir && strings.HasPrefix(e.Path, dir.Path+"/")
 }
 
 func FileSHA1(path string) (string, error) {

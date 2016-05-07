@@ -94,3 +94,16 @@ func TestRemoveDirs(t *testing.T) {
 		t.Fatalf("want len(remove) = %d, got %d", want, got)
 	}
 }
+
+func TestInDir(t *testing.T) {
+	d := DirEntry{Path: "a", IsDir: true}
+	f1 := DirEntry{Path: "ab"}
+	f2 := DirEntry{Path: "a/b"}
+
+	if f1.InDir(d) {
+		t.Error("ab was in dir a")
+	}
+	if !f2.InDir(d) {
+		t.Error("a/b was not in dir a")
+	}
+}
